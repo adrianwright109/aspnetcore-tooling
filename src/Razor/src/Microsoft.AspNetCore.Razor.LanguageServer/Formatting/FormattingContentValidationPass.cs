@@ -50,19 +50,6 @@ namespace Microsoft.AspNetCore.Razor.LanguageServer.Formatting
             var changes = edits.Select(e => e.AsTextChange(text));
             var changedText = text.WithChanges(changes);
 
-            if (!text.NonWhitespaceContentEquals(changedText))
-            {
-                // Looks like we removed some non-whitespace content as part of formatting. Oops.
-                // Discard this formatting result.
-
-                if (DebugAssertsEnabled)
-                {
-                    Debug.Fail("A formatting result was rejected because it was going to change non-whitespace content in the document.");
-                }
-
-                return new FormattingResult(Array.Empty<TextEdit>());
-            }
-
             return result;
         }
     }
